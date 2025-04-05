@@ -2,6 +2,7 @@ obj
 bin
 
 # Visual Studio files
+.vs
 *sln
 *.vcxproj
 *.vcxproj.*
