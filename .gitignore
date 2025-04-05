@@ -1,0 +1,7 @@
+obj
+bin
+
+# Visual Studio files
+*sln
+*.vcxproj
+*.vcxproj.*
