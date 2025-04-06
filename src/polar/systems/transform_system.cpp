@@ -8,11 +8,10 @@ namespace polar
 
 	void TransformSystem::update()
 	{
-		_registry.view<Transform>().each([](Transform& transform)
+		action<Transform>([](Transform& transform)
 			{
 				transform.positionX += 1;
-				std::cout << "PositionX: " << transform.positionX
-					<< " PositionY: " << transform.positionY << std::endl;
+				std::cout << "PositionX: " << transform.positionX << " PositionY: " << transform.positionY << std::endl;
 			}
 		);
 	}
