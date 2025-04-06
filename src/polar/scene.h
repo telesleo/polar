@@ -4,6 +4,7 @@
 
 #include <cstdint>
 #include <entt.hpp>
+#include "system.h"
 
 namespace polar
 {
@@ -17,7 +18,17 @@ namespace polar
 		{
 			_registry.emplace<T>(static_cast<entt::entity>(entity), args...);
 		}
+
+		template <typename T>
+		void addSystem()
+		{
+			T system(_registry);
+			_systems.push_back(std::make_unique<T>(_registry));
+		}
+
+		POLAR_API void update();
 	private:
 		entt::registry _registry;
+		std::vector<std::unique_ptr<System>> _systems;
 	};
 }
