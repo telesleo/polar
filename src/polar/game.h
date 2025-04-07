@@ -2,6 +2,7 @@
 
 #include "polar_api.h"
 
+#include "input.h"
 #include <cstdint>
 
 namespace polar
@@ -15,5 +16,6 @@ namespace polar
 		char* _windowTitle;
 		uint16_t _windowWidth;
 		uint16_t _windowHeight;
+		Input input;
 	};
 }
