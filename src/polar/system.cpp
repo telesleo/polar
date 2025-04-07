@@ -2,5 +2,8 @@
 
 namespace polar
 {
-	System::System(entt::registry& registry) : _registry(registry) {}
+	System::System(entt::registry& registry) : _registry(registry)
+	{
+	
+	}
 }

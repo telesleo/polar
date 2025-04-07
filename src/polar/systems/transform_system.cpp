@@ -4,7 +4,10 @@
 
 namespace polar
 {
-	TransformSystem::TransformSystem(entt::registry& registry): System(registry) {}
+	TransformSystem::TransformSystem(entt::registry& registry): System(registry)
+	{
+	
+	}
 
 	void TransformSystem::update()
 	{
