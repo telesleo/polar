@@ -7,11 +7,11 @@ project "Polar"
   language "C++"
   cppdialect "C++17"
   targetdir ("./bin/%{cfg.buildcfg}")
-  includedirs {"./vendor/entt/include/", "./vendor/SDL/include/"}
+  includedirs {"./vendor/entt/include/", "./vendor/SDL/include/", "./vendor/glad/include/}
   libdirs { "./vendor/SDL/lib/" }
   links { "SDL3" }
 
-  files { "**.h", "**.hpp", "**.cpp" }
+  files { "**.h", "**.hpp", "**.c", "**.cpp" }
 
   postbuildcommands {
    "{COPY} \"./vendor/SDL/lib/SDL3.dll\" \"%{cfg.targetdir}\""
