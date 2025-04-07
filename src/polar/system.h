@@ -7,13 +7,12 @@ namespace polar
 	class System
 	{
 	public:
-		System(entt::registry& registry);
-		virtual void update() = 0;
+		virtual void update(entt::registry& registry) = 0;
 
 		template <typename... Components, typename Func>
-		void action(Func&& callback)
+		void action(entt::registry& registry, Func&& callback)
 		{
-			auto view = _registry.view<Components...>();
+			auto view = registry.view<Components...>();
 
 			if constexpr (std::is_invocable_v<Func, uint32_t, Components&...>)
 			{
@@ -30,7 +29,5 @@ namespace polar
 				view.each(std::forward<Func>(callback));
 			}
 		}
-	private:
-		entt::registry& _registry;
 	};
 }

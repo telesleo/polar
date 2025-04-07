@@ -11,7 +11,7 @@ namespace polar
 	{
 		for (auto& system : _systems)
 		{
-			system->update();
+			system->update(_registry);
 		}
 	}
 }

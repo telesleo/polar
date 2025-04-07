@@ -22,8 +22,7 @@ namespace polar
 		template <typename T>
 		void addSystem()
 		{
-			T system(_registry);
-			_systems.push_back(std::make_unique<T>(_registry));
+			_systems.push_back(std::make_unique<T>());
 		}
 
 		POLAR_API void update();
