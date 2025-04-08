@@ -14,6 +14,7 @@ namespace polar
 	public:
 		POLAR_API Game(char* windowTitle, uint16_t windowWidth, uint16_t windowHeight);
 		POLAR_API ~Game();
+		POLAR_API void resizeWindow(uint32_t width, uint32_t height);
 	private:
 		char* _windowTitle;
 		uint16_t _windowWidth;

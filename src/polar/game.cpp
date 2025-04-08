@@ -43,6 +43,17 @@ namespace polar
 			}
 		);
 
+		input.onKeyPressed
+		(
+			SDL_EVENT_WINDOW_RESIZED,
+			[this]()
+			{
+				int width, height;
+				SDL_GetWindowSize(_window, &width, &height);
+				this->resizeWindow(width, height);
+			}
+		);
+
 		while (running)
 		{
 			input.update();
@@ -55,5 +66,12 @@ namespace polar
 		SDL_GL_DestroyContext(_context);
 		SDL_DestroyWindow(_window);
 		SDL_Quit();
+	}
+
+	void Game::resizeWindow(uint32_t width, uint32_t height)
+	{
+		_windowWidth = width;
+		_windowHeight = height;
+		glViewport(0, 0, _windowWidth, _windowHeight);
 	}
 }

@@ -22,6 +22,10 @@ namespace polar
 	{
 		while (SDL_PollEvent(&_event))
 		{
+            if (_event.type == SDL_EVENT_WINDOW_RESIZED)
+            {
+                
+            }
             triggerKeyPress(_event.type);
 		}
 	}

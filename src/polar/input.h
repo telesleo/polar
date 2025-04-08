@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <SDL3/SDL.h>
 #include <functional>
 #include <unordered_map>
