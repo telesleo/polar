@@ -4,7 +4,6 @@
 #include <glad/glad.h>
 #include <stdio.h>
 
-#include <iostream>
 #include <cstdint>
 #include <string>
 
@@ -15,20 +14,27 @@ namespace polar
 	Game::Game(char* windowTitle, uint16_t windowWidth, uint16_t windowHeight)
 		: _windowTitle(windowTitle), _windowWidth(windowWidth), _windowHeight(windowHeight)
 	{
-
-	}
-
-	void Game::start()
-	{
 		SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
 
-		SDL_Window* window = SDL_CreateWindow(
+		_window = SDL_CreateWindow
+		(
 			_windowTitle, _windowWidth, _windowHeight, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL
 		);
 
+		_context = SDL_GL_CreateContext(_window);
+		SDL_GL_MakeCurrent(_window, _context);
+
+		if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress))
+		{
+			SDL_Log("Failed to initialize OpenGL context");
+		}
+
+		_input = std::make_unique<Input>();
+		_renderer = std::make_unique<Renderer>();
+
 		bool running = true;
 
-		input.onKeyPressed
+		_input->onKeyPressed
 		(
 			SDL_EVENT_QUIT,
 			[&running]()
@@ -39,10 +45,15 @@ namespace polar
 
 		while (running)
 		{
-			input.update();
+			_input->update();
+			_renderer->update(_window);
 		}
+	}
 
-		SDL_DestroyWindow(window);
+	Game::~Game()
+	{
+		SDL_GL_DestroyContext(_context);
+		SDL_DestroyWindow(_window);
 		SDL_Quit();
 	}
 }
