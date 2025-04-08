@@ -29,12 +29,12 @@ namespace polar
 			SDL_Log("Failed to initialize OpenGL context");
 		}
 
-		_input = std::make_unique<Input>();
-		_renderer = std::make_unique<Renderer>();
+		Input input;
+		Renderer renderer;
 
 		bool running = true;
 
-		_input->onKeyPressed
+		input.onKeyPressed
 		(
 			SDL_EVENT_QUIT,
 			[&running]()
@@ -45,8 +45,8 @@ namespace polar
 
 		while (running)
 		{
-			_input->update();
-			_renderer->update(_window);
+			input.update();
+			renderer.update(_window);
 		}
 	}
 

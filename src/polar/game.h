@@ -20,7 +20,5 @@ namespace polar
 		uint16_t _windowHeight;
 		SDL_Window* _window;
 		SDL_GLContext _context;
-		std::unique_ptr<Input> _input;
-		std::unique_ptr<Renderer> _renderer;
 	};
 }
