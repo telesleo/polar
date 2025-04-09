@@ -9,6 +9,11 @@ namespace polar
 {
 	Shader::Shader(const char* vertexPath, const char* fragmentPath) : _id(0)
 	{
+        if (vertexPath == nullptr || fragmentPath == nullptr) {
+            std::cerr << "Invalid shader paths provided!" << std::endl;
+            return;
+        }
+
         std::string vertexCode = readFile(vertexPath);
         uint32_t vertexId = compileCode(vertexCode, GL_VERTEX_SHADER);
 
@@ -25,7 +30,7 @@ namespace polar
         {
             char infoLog[512];
             glGetProgramInfoLog(_id, 512, NULL, infoLog);
-            std::cout << "" << infoLog << std::endl;
+            std::cerr << "" << infoLog << std::endl;
         }
         glDeleteShader(vertexId);
         glDeleteShader(fragmentId);
@@ -56,7 +61,7 @@ namespace polar
         {
             char infoLog[512];
             glGetShaderInfoLog(id, 512, NULL, infoLog);
-            std::cout << "Failed to link shader program\n" << infoLog << std::endl;
+            std::cerr << "Failed to link shader program\n" << infoLog << std::endl;
         };
 
         return id;
