@@ -12,7 +12,7 @@
 namespace polar
 {
 	Game::Game(char* windowTitle, uint16_t windowWidth, uint16_t windowHeight)
-		: _windowTitle(windowTitle), _windowWidth(windowWidth), _windowHeight(windowHeight)
+		: _windowTitle(windowTitle), _windowWidth(windowWidth), _windowHeight(windowHeight), _running(false)
 	{
 		SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
 
@@ -32,14 +32,12 @@ namespace polar
 		input = std::make_unique<Input>();
 		renderer = std::make_unique<Renderer>();
 
-		bool running = true;
-
 		input->onKeyPressed
 		(
 			SDL_EVENT_QUIT,
-			[&running]()
+			[this]()
 			{
-				running = false;
+				_running = false;
 			}
 		);
 
@@ -53,12 +51,6 @@ namespace polar
 				this->resizeWindow(width, height);
 			}
 		);
-
-		while (running)
-		{
-			input->update();
-			renderer->update(_window);
-		}
 	}
 
 	Game::~Game()
@@ -66,6 +58,17 @@ namespace polar
 		SDL_GL_DestroyContext(_context);
 		SDL_DestroyWindow(_window);
 		SDL_Quit();
+	}
+
+	void Game::start()
+	{
+		_running = true;
+
+		while (_running)
+		{
+			input->update();
+			renderer->update(_window);
+		}
 	}
 
 	void Game::resizeWindow(uint32_t width, uint32_t height)
