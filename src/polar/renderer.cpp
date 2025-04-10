@@ -3,7 +3,7 @@
 #include <glad/glad.h>
 #include <cstdint>
 #include <iostream>
-#include "vertex_array.h"
+#include "render_object.h"
 
 namespace polar
 {
@@ -21,10 +21,10 @@ namespace polar
 
 	Renderer::~Renderer()
 	{
-		for (const VertexArray& vertexArray : _vertexArrays)
+		for (const RenderObject& renderObject : _renderObjects)
 		{
-			glDeleteVertexArrays(1, &vertexArray.vao);
-			glDeleteBuffers(1, &vertexArray.vbo);
+			glDeleteVertexArrays(1, &renderObject.vao);
+			glDeleteBuffers(1, &renderObject.vbo);
 		}
 	}
 
@@ -32,18 +32,19 @@ namespace polar
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		for (const VertexArray& vertexArray : _vertexArrays)
+		for (const RenderObject& renderObject : _renderObjects)
 		{
 			_shader.use();
-			glBindVertexArray(vertexArray.vao);
-			glBindBuffer(GL_ARRAY_BUFFER, vertexArray.vbo);
-			glDrawElements(GL_TRIANGLES, vertexArray.indexCount, GL_UNSIGNED_INT, 0);
+			renderObject.texture.use();
+			glBindVertexArray(renderObject.vao);
+			glBindBuffer(GL_ARRAY_BUFFER, renderObject.vbo);
+			glDrawElements(GL_TRIANGLES, renderObject.indexCount, GL_UNSIGNED_INT, 0);
 		}
 
 		SDL_GL_SwapWindow(window);
 	}
 
-	void Renderer::add(float* vertices, uint32_t vertexSize, uint32_t* indices, uint32_t indexSize)
+	void Renderer::add(float* vertices, uint32_t vertexSize, uint32_t* indices, uint32_t indexSize, Texture& texture)
 	{
 		uint32_t vao;
 		uint32_t vbo;
@@ -61,13 +62,16 @@ namespace polar
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexSize, indices, GL_STATIC_DRAW);
 
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0);
+
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+		glEnableVertexAttribArray(1);
 
 		glBindVertexArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-		_vertexArrays.push_back({ vao, vbo, ebo, indexSize });
+		_renderObjects.push_back({ vao, vbo, ebo, indexSize, texture });
 	}
 }
