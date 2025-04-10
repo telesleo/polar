@@ -7,7 +7,7 @@ project "Polar"
   language "C++"
   cppdialect "C++17"
   targetdir ("./bin/%{cfg.buildcfg}")
-  includedirs {"./vendor/entt/include/", "./vendor/SDL/include/", "./vendor/glad/include/}
+  includedirs {"./vendor/entt/include/", "./vendor/SDL/include/", "./vendor/glad/include/", "./vendor/stb_image/include/"}
   libdirs { "./vendor/SDL/lib/" }
   links { "SDL3" }
 
