@@ -9,6 +9,7 @@
 #include "shader.h"
 #include "render_object.h"
 #include "texture.h"
+#include <glm/glm.hpp>
 
 namespace polar
 {
@@ -18,7 +19,14 @@ namespace polar
 		POLAR_API Renderer();
 		POLAR_API ~Renderer();
 		POLAR_API void update(SDL_Window* window);
-		POLAR_API void add(float* vertices, uint32_t vertexSize, uint32_t* indices, uint32_t indexSize, Texture& texture);
+		POLAR_API void add(
+			float* vertices,
+			uint32_t vertexSize,
+			uint32_t* indices,
+			uint32_t indexSize,
+			Texture& texture,
+			glm::mat4 transform
+		);
 	private:
 		Shader _shader;
 		std::vector<RenderObject> _renderObjects;

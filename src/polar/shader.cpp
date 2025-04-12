@@ -76,4 +76,15 @@ namespace polar
     {
         glUseProgram(_id);
     }
+
+    void Shader::setTransform(glm::mat4 transform)
+    {
+        unsigned int transformLoc = glGetUniformLocation(_id, "transform");
+        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
+    }
+
+    void Shader::setTexture(Texture& texture)
+    {
+        glBindTexture(GL_TEXTURE_2D, texture.getId());
+    }
 }

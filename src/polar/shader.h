@@ -4,6 +4,9 @@
 
 #include <string>
 #include <glad/glad.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include "texture.h"
 
 namespace polar
 {
@@ -13,6 +16,8 @@ namespace polar
 		POLAR_API Shader(const char* vertexPath, const char* fragmentPath);
 		POLAR_API ~Shader();
 		POLAR_API void use() const;
+		POLAR_API void setTransform(glm::mat4 transform);
+		POLAR_API void Shader::setTexture(Texture& texture);
 	private:
 		uint32_t _id;
 		std::string readFile(const char* filename);

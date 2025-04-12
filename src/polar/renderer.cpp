@@ -35,7 +35,8 @@ namespace polar
 		for (const RenderObject& renderObject : _renderObjects)
 		{
 			_shader.use();
-			renderObject.texture.use();
+			_shader.setTransform(renderObject.transform);
+			_shader.setTexture(renderObject.texture);
 			glBindVertexArray(renderObject.vao);
 			glBindBuffer(GL_ARRAY_BUFFER, renderObject.vbo);
 			glDrawElements(GL_TRIANGLES, renderObject.indexCount, GL_UNSIGNED_INT, 0);
@@ -44,7 +45,7 @@ namespace polar
 		SDL_GL_SwapWindow(window);
 	}
 
-	void Renderer::add(float* vertices, uint32_t vertexSize, uint32_t* indices, uint32_t indexSize, Texture& texture)
+	void Renderer::add(float* vertices, uint32_t vertexSize, uint32_t* indices, uint32_t indexSize, Texture& texture, glm::mat4 transform)
 	{
 		uint32_t vao;
 		uint32_t vbo;
@@ -72,6 +73,6 @@ namespace polar
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-		_renderObjects.push_back({ vao, vbo, ebo, indexSize, texture });
+		_renderObjects.push_back({ vao, vbo, ebo, indexSize, texture, transform });
 	}
 }

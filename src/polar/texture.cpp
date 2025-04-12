@@ -32,8 +32,8 @@ namespace polar
 		glDeleteBuffers(1, &_id);
 	}
 
-	void Texture::use() const
+	uint32_t Texture::getId() const
 	{
-		glBindTexture(GL_TEXTURE_2D, _id);
+		return _id;
 	}
 }
