@@ -31,16 +31,15 @@ namespace polar
 		view.use<Camera>();
 		
 		entt::entity entity = *view.begin();
-		const Transform& transform = view.get<Transform>(entity);
-		const Camera& camera = view.get<Camera>(entity);
+		Transform& transform = view.get<Transform>(entity);
+		Camera& camera = view.get<Camera>(entity);
 
-		glm::mat4 viewTranslation = glm::translate(glm::mat4(1.0f), transform.position);
 		glm::mat4 viewRotationX = glm::rotate(glm::mat4(1.0f), glm::radians(transform.rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
 		glm::mat4 viewRotationY = glm::rotate(glm::mat4(1.0f), glm::radians(transform.rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
 		glm::mat4 viewRotationZ = glm::rotate(glm::mat4(1.0f), glm::radians(transform.rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
 		glm::mat4 viewRotation = viewRotationX * viewRotationY * viewRotationZ;
-		glm::mat4 viewScale = glm::scale(glm::mat4(1.0f), transform.scale);
-		glm::mat4 viewMatrix = viewTranslation * viewRotation * viewScale;
+		glm::mat4 viewTranslation = glm::translate(glm::mat4(1.0f), transform.position);
+		glm::mat4 viewMatrix = viewRotation * viewTranslation;
 
 		WindowSize windowSize = renderer.getWindowSize();
 		glm::mat4 projectionMatrix = glm::perspective
