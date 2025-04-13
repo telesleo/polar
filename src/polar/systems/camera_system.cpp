@@ -38,10 +38,10 @@ namespace polar
 		WindowSize windowSize = renderer.getWindowSize();
 		glm::mat4 projectionMatrix = glm::perspective
 		(
-			glm::radians(80.0f),
+			glm::radians(camera.fieldOfView),
 			(float)windowSize.width / (float)windowSize.height,
-			0.1f,
-			100.0f
+			camera.near,
+			camera.far
 		);
 		renderer.projectionView = projectionMatrix * viewMatrix;
 	}
