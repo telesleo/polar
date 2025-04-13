@@ -6,7 +6,7 @@
 
 namespace polar
 {
-	Texture::Texture(char* path)
+	Texture::Texture(const char* path)
 	{
 		int width, height, nrChannels;
 		uint8_t* data = stbi_load(path, &width, &height, &nrChannels, 0);
@@ -29,7 +29,7 @@ namespace polar
 
 	Texture::~Texture()
 	{
-		glDeleteBuffers(1, &_id);
+		glDeleteTextures(1, &_id);
 	}
 
 	uint32_t Texture::getId() const

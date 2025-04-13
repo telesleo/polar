@@ -1,13 +1,14 @@
 #pragma once
 
-#include "entt.hpp"
+#include <entt.hpp>
+#include "Renderer.h"
 
 namespace polar
 {
 	class System
 	{
 	public:
-		virtual void update(entt::registry& registry) = 0;
+		virtual void update(entt::registry& registry, Renderer& renderer) = 0;
 
 		template <typename... Components, typename Func>
 		void action(entt::registry& registry, Func&& callback)

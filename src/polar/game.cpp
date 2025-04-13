@@ -11,8 +11,11 @@
 
 namespace polar
 {
-	Game::Game(char* windowTitle, uint16_t windowWidth, uint16_t windowHeight)
-		: _windowTitle(windowTitle), _windowWidth(windowWidth), _windowHeight(windowHeight), _running(false)
+	Game::Game(char* windowTitle, uint16_t windowWidth, uint16_t windowHeight) :
+		_windowTitle(windowTitle),
+		_windowWidth(windowWidth),
+		_windowHeight(windowHeight),
+		_running(false)
 	{
 		SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
 
@@ -30,7 +33,8 @@ namespace polar
 		}
 
 		input = std::make_unique<Input>();
-		renderer = std::make_unique<Renderer>();
+		scene = std::make_unique<Scene>();
+		renderer = std::make_unique<Renderer>(_window);
 
 		input->onKeyPressed
 		(
@@ -67,6 +71,7 @@ namespace polar
 		while (_running)
 		{
 			input->update();
+			scene->update(*renderer);
 			renderer->update(_window);
 		}
 	}

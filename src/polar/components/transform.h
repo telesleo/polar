@@ -4,7 +4,11 @@ namespace polar
 {
 	struct Transform
 	{
-		int positionX;
-		int positionY;
+		float positionX;
+		float positionY;
+		float positionZ;
+		float rotationX;
+		float rotationY;
+		float rotationZ;
 	};
 }

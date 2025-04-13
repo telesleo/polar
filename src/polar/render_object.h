@@ -6,13 +6,24 @@
 
 namespace polar
 {
-    struct RenderObject
+    class RenderObject
     {
+    public:
         uint32_t vao;
         uint32_t vbo;
         uint32_t ebo;
         uint32_t indexCount;
         Texture& texture;
         glm::mat4 transform;
+        RenderObject
+        (
+            uint32_t vao,
+            uint32_t vbo,
+            uint32_t ebo,
+            uint32_t indexCount,
+            Texture& texture,
+            const glm::mat4& transform
+        );
+        ~RenderObject();
     };
 }

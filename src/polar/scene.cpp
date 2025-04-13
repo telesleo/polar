@@ -7,11 +7,11 @@ namespace polar
 		return static_cast<uint32_t>(_registry.create());
 	}
 
-	void Scene::update()
+	void Scene::update(Renderer& renderer)
 	{
 		for (auto& system : _systems)
 		{
-			system->update(_registry);
+			system->update(_registry, renderer);
 		}
 	}
 }

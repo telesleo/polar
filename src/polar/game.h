@@ -6,6 +6,7 @@
 #include <memory>
 #include "input.h"
 #include "renderer.h"
+#include "scene.h";
 
 namespace polar
 {
@@ -17,6 +18,7 @@ namespace polar
 		POLAR_API void start();
 		POLAR_API void resizeWindow(uint32_t width, uint32_t height);
 		std::unique_ptr<Input> input;
+		std::unique_ptr<Scene> scene;
 		std::unique_ptr<Renderer> renderer;
 	private:
 		char* _windowTitle;
