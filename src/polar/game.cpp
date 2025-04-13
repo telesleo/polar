@@ -12,13 +12,14 @@
 namespace polar
 {
 	Game::Game(char* windowTitle, uint16_t windowWidth, uint16_t windowHeight) :
+		displayFPS(false),
 		_windowTitle(windowTitle),
 		_windowWidth(windowWidth),
 		_windowHeight(windowHeight),
 		_running(false),
 		_frameCount(0),
 		_fpsTimer(0),
-		displayFPS(false)
+		_fpsDisplayRate(0.1f)
 	{
 		SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
 
@@ -94,13 +95,13 @@ namespace polar
 	{
 		_frameCount++;
 		_fpsTimer += deltaTime;
-		if (_fpsTimer >= 1)
+		if (_fpsTimer >= _fpsDisplayRate)
 		{
 			if (displayFPS)
 			{
-				std::cout << "FPS: " << _frameCount << "\n";
+				std::cout << "FPS: " << static_cast<float>(_frameCount) / _fpsDisplayRate << "\n";
 			}
-			_fpsTimer -= 1.0f;
+			_fpsTimer -= _fpsDisplayRate;
 			_frameCount = 0;
 		}
 	}

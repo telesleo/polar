@@ -30,6 +30,7 @@ namespace polar
 		bool _running;
 		uint32_t _frameCount;
 		float _fpsTimer;
+		float _fpsDisplayRate;
 
 		void updateFPS(float deltaTime);
 	};
