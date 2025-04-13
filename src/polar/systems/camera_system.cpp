@@ -1,0 +1,48 @@
+#include "camera_system.h"
+
+#include <iostream>
+#include <glm/glm.hpp>
+#include "../components/transform.h"
+#include "../components/camera.h"
+#include "../window_size.h"
+
+namespace polar
+{
+	void CameraSystem::start(entt::registry& registry, Input& input, Renderer& renderer)
+	{
+		registry.sort<Camera>
+		(
+			[](const Camera& a, const Camera& b)
+			{
+				return a.priority > b.priority;
+			}
+		);
+	}
+
+	void CameraSystem::update(entt::registry& registry, Input& input, Renderer& renderer)
+	{
+		auto view = registry.view<Transform, Camera>();
+
+		if (view.size_hint() <= 0)
+		{
+			return;
+		}
+		
+		view.use<Camera>();
+		
+		entt::entity entity = *view.begin();
+		const Transform& transform = view.get<Transform>(entity);
+		const Camera& camera = view.get<Camera>(entity);
+
+		glm::mat4 viewMatrix = glm::translate(glm::mat4(1.0f), transform.position);
+		WindowSize windowSize = renderer.getWindowSize();
+		glm::mat4 projectionMatrix = glm::perspective
+		(
+			glm::radians(80.0f),
+			(float)windowSize.width / (float)windowSize.height,
+			0.1f,
+			100.0f
+		);
+		renderer.projectionView = projectionMatrix * viewMatrix;
+	}
+}

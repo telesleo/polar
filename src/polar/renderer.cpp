@@ -8,7 +8,8 @@
 
 namespace polar
 {
-	Renderer::Renderer(SDL_Window* window) : _shader
+	Renderer::Renderer(SDL_Window* window) :
+	_shader
 	(
 		Shader
 		(
@@ -16,7 +17,8 @@ namespace polar
 			"C:\\Users\\leona\\Projects\\cpp\\polar\\src\\polar\\shaders\\shader.frag"
 		)
 	),
-	_window(window)
+	_window(window),
+	projectionView(glm::mat4(1.0f))
 	{
 		glClearColor(0.1f, 0.1f, 0.2f, 1.0f);
 		glEnable(GL_DEPTH_TEST);

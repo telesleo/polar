@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <entt.hpp>
 #include "system.h"
+#include "input.h"
 #include "renderer.h"
 
 namespace polar
@@ -26,7 +27,8 @@ namespace polar
 			_systems.push_back(std::make_unique<T>());
 		}
 
-		POLAR_API void update(Renderer& renderer);
+		POLAR_API void start(Input& input, Renderer& renderer);
+		POLAR_API void update(Input& input, Renderer& renderer);
 	private:
 		entt::registry _registry;
 		std::vector<std::unique_ptr<System>> _systems;

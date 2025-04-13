@@ -68,10 +68,12 @@ namespace polar
 	{
 		_running = true;
 
+		scene->start(*input, *renderer);
+
 		while (_running)
 		{
 			input->update();
-			scene->update(*renderer);
+			scene->update(*input, *renderer);
 			renderer->update(_window);
 		}
 	}

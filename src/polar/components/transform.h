@@ -1,14 +1,13 @@
 #pragma once
 
+#include <glm/glm.hpp>
+
 namespace polar
 {
 	struct Transform
 	{
-		float positionX;
-		float positionY;
-		float positionZ;
-		float rotationX;
-		float rotationY;
-		float rotationZ;
+		glm::vec3 position;
+		glm::vec3 rotation;
+		glm::uvec3 scale;
 	};
 }
