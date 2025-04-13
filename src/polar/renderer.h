@@ -22,7 +22,8 @@ namespace polar
 		POLAR_API Renderer(SDL_Window* window);
 		POLAR_API WindowSize getWindowSize() const;
 		POLAR_API void update(SDL_Window* window);
-		POLAR_API uint32_t add(
+		POLAR_API uint32_t add
+		(
 			float* vertices,
 			uint32_t vertexSize,
 			uint32_t* indices,
@@ -32,6 +33,7 @@ namespace polar
 		);
 		POLAR_API void updateTransform(uint32_t id, glm::mat4 transform);
 		POLAR_API Texture& getTexture(std::string path);
+		glm::mat4 projectionView;
 	private:
 		SDL_Window* _window;
 		Shader _shader;
