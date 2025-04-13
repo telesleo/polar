@@ -19,7 +19,13 @@ namespace polar
 		);
 	}
 
-	void CameraSystem::update(entt::registry& registry, Input& input, Renderer& renderer)
+	void CameraSystem::update
+	(
+		float deltaTime,
+		entt::registry& registry,
+		Input& input,
+		Renderer& renderer
+	)
 	{
 		auto view = registry.view<Transform, Camera>();
 

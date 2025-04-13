@@ -15,11 +15,11 @@ namespace polar
 		}
 	}
 
-	void Scene::update(Input& input, Renderer& renderer)
+	void Scene::update(float deltaTime, Input& input, Renderer& renderer)
 	{
 		for (auto& system : _systems)
 		{
-			system->update(_registry, input, renderer);
+			system->update(deltaTime, _registry, input, renderer);
 		}
 	}
 }

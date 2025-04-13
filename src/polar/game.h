@@ -20,6 +20,7 @@ namespace polar
 		std::unique_ptr<Input> input;
 		std::unique_ptr<Scene> scene;
 		std::unique_ptr<Renderer> renderer;
+		bool displayFPS;
 	private:
 		char* _windowTitle;
 		uint16_t _windowWidth;
@@ -27,5 +28,9 @@ namespace polar
 		SDL_Window* _window;
 		SDL_GLContext _context;
 		bool _running;
+		uint32_t _frameCount;
+		float _fpsTimer;
+
+		void updateFPS(float deltaTime);
 	};
 }

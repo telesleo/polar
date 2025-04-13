@@ -28,7 +28,7 @@ namespace polar
 		}
 
 		POLAR_API void start(Input& input, Renderer& renderer);
-		POLAR_API void update(Input& input, Renderer& renderer);
+		POLAR_API void update(float deltaTime, Input& input, Renderer& renderer);
 	private:
 		entt::registry _registry;
 		std::vector<std::unique_ptr<System>> _systems;

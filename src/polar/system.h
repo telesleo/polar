@@ -10,6 +10,6 @@ namespace polar
 	{
 	public:
 		virtual void start(entt::registry& registry, Input& input, Renderer& rendere) = 0;
-		virtual void update(entt::registry& registry, Input& input, Renderer& renderer) = 0;
+		virtual void update(float deltaTime, entt::registry& registry, Input& input, Renderer& renderer) = 0;
 	};
 }

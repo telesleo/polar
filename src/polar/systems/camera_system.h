@@ -10,6 +10,12 @@ namespace polar
 	{
 	public:
 		POLAR_API void start(entt::registry& registry, Input& input, Renderer& renderer) override;
-		POLAR_API void update(entt::registry& registry, Input& input, Renderer& renderer) override;
+		POLAR_API void update
+		(
+			float deltaTime,
+			entt::registry& registry,
+			Input& input,
+			Renderer& renderer
+		) override;
 	};
 }
