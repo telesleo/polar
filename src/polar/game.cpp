@@ -54,12 +54,20 @@ namespace polar
 	{
 		_running = true;
 
-		uint64_t last = SDL_GetPerformanceCounter();
+		_last = SDL_GetPerformanceCounter();
 
 		scene->start(*input, *renderer);
 
 		while (_running)
 		{
+			updateDeltaTime();
+			if (displayFPS)
+			{
+				updateFPS();
+			}
+
+			input->update();
+
 			if (input->quit())
 			{
 				_running = false;
@@ -72,14 +80,7 @@ namespace polar
 				this->resizeWindow(width, height);
 			}
 
-			uint64_t now = SDL_GetPerformanceCounter();
-			float deltaTime = (now - last) / (float)SDL_GetPerformanceFrequency();
-			last = now;
-
-			updateFPS(deltaTime);
-
-			input->update();
-			scene->update(deltaTime, *input, *renderer);
+			scene->update(_deltaTime, *input, *renderer);
 			renderer->update(_window);
 		}
 	}
@@ -91,17 +92,22 @@ namespace polar
 		glViewport(0, 0, _windowWidth, _windowHeight);
 	}
 
-	void Game::updateFPS(float deltaTime)
+	void Game::updateDeltaTime()
+	{
+		uint64_t now = SDL_GetPerformanceCounter();
+		_deltaTime = (now - _last) / (float)SDL_GetPerformanceFrequency();
+		_last = now;
+	}
+
+	void Game::updateFPS()
 	{
 		_frameCount++;
-		_fpsTimer += deltaTime;
+		_fpsTimer += _deltaTime;
 		if (_fpsTimer >= _fpsDisplayRate)
 		{
-			if (displayFPS)
-			{
-				std::cout << "FPS: " << static_cast<float>(_frameCount) / _fpsDisplayRate << "\n";
-			}
-			_fpsTimer -= _fpsDisplayRate;
+			uint32_t fps = static_cast<float>(_frameCount) / _fpsTimer;
+			std::cout << "FPS: " << fps << "\n";
+			_fpsTimer = 0;
 			_frameCount = 0;
 		}
 	}

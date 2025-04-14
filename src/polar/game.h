@@ -28,10 +28,13 @@ namespace polar
 		SDL_Window* _window;
 		SDL_GLContext _context;
 		bool _running;
+		float _deltaTime;
+		uint64_t _last;
 		uint32_t _frameCount;
 		float _fpsTimer;
 		float _fpsDisplayRate;
 
-		void updateFPS(float deltaTime);
+		void updateDeltaTime();
+		void updateFPS();
 	};
 }
