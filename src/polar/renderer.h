@@ -37,7 +37,8 @@ namespace polar
 	private:
 		SDL_Window* _window;
 		Shader _shader;
-		std::map<uint32_t, std::unique_ptr<RenderObject>> _renderObjects;
 		std::map<std::string, std::unique_ptr<Texture>> _textures;
+		uint32_t _renderObjectNextId;
+		std::map<uint32_t, std::unique_ptr<RenderObject>> _renderObjects;
 	};
 }

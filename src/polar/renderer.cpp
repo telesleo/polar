@@ -9,19 +9,21 @@
 namespace polar
 {
 	Renderer::Renderer(SDL_Window* window) :
-	_shader
-	(
-		Shader
+		_shader
 		(
-			"C:\\Users\\leona\\Projects\\cpp\\polar\\src\\polar\\shaders\\shader.vert",
-			"C:\\Users\\leona\\Projects\\cpp\\polar\\src\\polar\\shaders\\shader.frag"
-		)
-	),
-	_window(window),
-	projectionView(glm::mat4(1.0f))
+			Shader
+			(
+				"C:\\Users\\leona\\Projects\\cpp\\polar\\src\\polar\\shaders\\shader.vert",
+				"C:\\Users\\leona\\Projects\\cpp\\polar\\src\\polar\\shaders\\shader.frag"
+			)
+		),
+		projectionView(glm::mat4(1.0f)),
+		_window(window),
+		_renderObjectNextId(0)
 	{
 		glClearColor(0.1f, 0.1f, 0.2f, 1.0f);
 		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_CULL_FACE);
 	}
 
 	void Renderer::update(SDL_Window* window)
@@ -34,7 +36,6 @@ namespace polar
 			_shader.setTransform(renderObject->transform);
 			_shader.setTexture(renderObject->texture);
 			glBindVertexArray(renderObject->vao);
-			glBindBuffer(GL_ARRAY_BUFFER, renderObject->vbo);
 			glDrawElements(GL_TRIANGLES, renderObject->indexCount, GL_UNSIGNED_INT, 0);
 		}
 
@@ -48,7 +49,8 @@ namespace polar
 		return { static_cast<uint32_t>(width), static_cast<uint32_t>(height) };
 	}
 
-	uint32_t Renderer::add(
+	uint32_t Renderer::add
+	(
 		float* vertices,
 		uint32_t vertexSize,
 		uint32_t* indices,
@@ -69,13 +71,11 @@ namespace polar
 
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		glBufferData(GL_ARRAY_BUFFER, vertexSize * sizeof(float), vertices, GL_STATIC_DRAW);
-
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexSize, indices, GL_STATIC_DRAW);
-
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0);
 
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexSize * sizeof(uint32_t), indices, GL_STATIC_DRAW);
 		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 		glEnableVertexAttribArray(1);
 
@@ -83,9 +83,9 @@ namespace polar
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-		_renderObjects.emplace(vao, std::make_unique<RenderObject>(vao, vbo, ebo, indexSize, texture, transform));
+		_renderObjects.emplace(_renderObjectNextId, std::make_unique<RenderObject>(vao, vbo, ebo, indexSize, texture, transform));
 
-		return vao;
+		return _renderObjectNextId++;
 	}
 
 	void Renderer::updateTransform(uint32_t id, glm::mat4 transform)
