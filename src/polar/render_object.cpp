@@ -4,15 +4,15 @@
 
 namespace polar
 {
-	RenderObject::RenderObject
+    RenderObject::RenderObject
     (
         uint32_t vao,
         uint32_t vbo,
         uint32_t ebo,
         uint32_t indexCount,
-        Texture& texture,
+        std::string texturePath,
         const glm::mat4& transform
-    ) : vao(vao), vbo(vbo), ebo(ebo), indexCount(indexCount), texture(texture), transform(transform)
+    ) : vao(vao), vbo(vbo), ebo(ebo), indexCount(indexCount), texturePath(texturePath), transform(transform)
     {
 
     }

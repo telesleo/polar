@@ -30,13 +30,17 @@ namespace polar
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		for (const auto& [key, renderObject] : _renderObjects)
+		_shader.use();
+		for (const auto& [texturePath, renderObjectIds] : _textureToRenderObjectId)
 		{
-			_shader.use();
-			_shader.setTransform(renderObject->transform);
-			_shader.setTexture(renderObject->texture);
-			glBindVertexArray(renderObject->vao);
-			glDrawElements(GL_TRIANGLES, renderObject->indexCount, GL_UNSIGNED_INT, 0);
+			_shader.setTexture(getTexture(texturePath));
+			for (uint32_t id : renderObjectIds)
+			{
+				RenderObject& renderObject = *_renderObjects[id];
+				_shader.setTransform(renderObject.transform);
+				glBindVertexArray(renderObject.vao);
+				glDrawElements(GL_TRIANGLES, renderObject.indexCount, GL_UNSIGNED_INT, 0);
+			}
 		}
 
 		SDL_GL_SwapWindow(window);
@@ -55,7 +59,7 @@ namespace polar
 		uint32_t vertexSize,
 		uint32_t* indices,
 		uint32_t indexSize,
-		Texture& texture,
+		std::string texture,
 		glm::mat4 transform
 	)
 	{
@@ -75,15 +79,26 @@ namespace polar
 		glEnableVertexAttribArray(0);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexSize * sizeof(uint32_t), indices, GL_STATIC_DRAW);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+		glBufferData
+		(
+			GL_ELEMENT_ARRAY_BUFFER, indexSize * sizeof(uint32_t), indices, GL_STATIC_DRAW
+		);
+		glVertexAttribPointer
+		(
+			1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float))
+		);
 		glEnableVertexAttribArray(1);
 
 		glBindVertexArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-		_renderObjects.emplace(_renderObjectNextId, std::make_unique<RenderObject>(vao, vbo, ebo, indexSize, texture, transform));
+		_renderObjects.emplace
+		(
+			_renderObjectNextId,
+			std::make_unique<RenderObject>(vao, vbo, ebo, indexSize, texture, transform )
+		);
+		_textureToRenderObjectId[texture].push_back(_renderObjectNextId);
 
 		return _renderObjectNextId++;
 	}

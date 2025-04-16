@@ -6,6 +6,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <vector>
 #include <glad/glad.h>
 #include <SDL3/SDL.h>
 #include <glm/glm.hpp>
@@ -28,7 +29,7 @@ namespace polar
 			uint32_t vertexSize,
 			uint32_t* indices,
 			uint32_t indexSize,
-			Texture& texture,
+			std::string texture,
 			glm::mat4 transform
 		);
 		POLAR_API void updateTransform(uint32_t id, glm::mat4 transform);
@@ -40,5 +41,6 @@ namespace polar
 		std::map<std::string, std::unique_ptr<Texture>> _textures;
 		uint32_t _renderObjectNextId;
 		std::map<uint32_t, std::unique_ptr<RenderObject>> _renderObjects;
+		std::map<std::string, std::vector<uint32_t>> _textureToRenderObjectId;
 	};
 }

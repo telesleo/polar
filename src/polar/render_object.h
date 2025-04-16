@@ -1,8 +1,9 @@
 #pragma once
 
 #include <cstdint>
-#include "texture.h"
+#include <string>
 #include <glm/glm.hpp>
+#include "texture.h"
 
 namespace polar
 {
@@ -13,7 +14,7 @@ namespace polar
         uint32_t vbo;
         uint32_t ebo;
         uint32_t indexCount;
-        Texture& texture;
+        std::string texturePath;
         glm::mat4 transform;
         RenderObject
         (
@@ -21,7 +22,7 @@ namespace polar
             uint32_t vbo,
             uint32_t ebo,
             uint32_t indexCount,
-            Texture& texture,
+            std::string texturePath,
             const glm::mat4& transform
         );
         ~RenderObject();
