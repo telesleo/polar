@@ -6,7 +6,13 @@
 
 It provides a core foundation for developing games, applications, and simulation-oriented projects.
 
-## Supported platforms
+## GPU instancing
+
+![polar library title](/images/grass.png)
+
+*~1100 FPS rendering 100,000 grass blades on a low-end GPU (512×512).*
+
+## Platforms
 
 Polar supports Linux and Windows; macOS has not been tested.
 
