@@ -1,0 +1,7 @@
+BasedOnStyle: Google
+IndentWidth: 4
+AccessModifierOffset: 0
+AllowShortFunctionsOnASingleLine: Empty
+BreakBeforeBraces: Allman
+FixNamespaceComments: false
+ColumnLimit: 120

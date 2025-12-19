@@ -1,10 +1,8 @@
 #pragma once
 
-#include <cstdint>
 #include <string>
-#include <vector>
 
-#include "polar/assets/image.hpp"
+#include "polar/data/image.hpp"
 #include "polar/renderer/index_type.hpp"
 #include "polar/renderer/layout.hpp"
 #include "polar/renderer/renderer_types.hpp"
@@ -28,7 +26,7 @@ class renderer
 
     virtual void draw() = 0;
 
-    virtual texture create_texture(const image& image_data) = 0;
+    virtual texture create_texture(const image& image) = 0;
     virtual program create_program(const std::string& vertex_source, const std::string& fragment_source) = 0;
     virtual mesh create_mesh(const void* vertex_data, size_t vertex_count, const layout& vertex_layout,
                              const void* index_data, size_t index_count, index_type index_format) = 0;

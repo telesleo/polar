@@ -9,6 +9,7 @@ add_subdirectory("external/glm")
 add_subdirectory("external/SDL3")
 add_subdirectory("external/glad")
 add_subdirectory("external/stb_image")
+add_subdirectory("external/freetype")
 
 file(GLOB_RECURSE POLAR_SOURCES CONFIGURE_DEPENDS "src/*.cpp")
 
@@ -24,4 +25,5 @@ target_link_libraries(polar
         SDL3-static
         glad
         stb_image
+        freetype
 )
